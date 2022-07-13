@@ -1,0 +1,49 @@
+@startuml Observer
+title Observer Pattern Diagram
+' Relations
+Supermarket ..|> ISubscriber
+Bar ..|> ISubscriber
+IPublisher -> ISubscriber
+Suplier <- Supermarket
+Suplier <- Bar
+Suplier ..|> IPublisher
+
+' Class definitions
+class ISubscriber << interface >>
+class ISubscriber {
+    +void update()
+}
+class Bar {
+    +void update()
+}
+class Supermarket {
+    +void update()
+}
+class IPublisher << interface >>
+class IPublisher {
+  +noticeAll()
+  +addSubscriber(ISubscriber *item)
+  +remSubscriber(ISubscriber *item)
+}
+
+class Suplier {
+  -vector<ISubscriber *> subscribers
+  -beverage_price
+  -food_price
+
+  +noticeAll()
+  +addSubscriber(ISubscriber *item)
+  +remSubscriber(ISubscriber *item)
+  .. Getters ..
+  +getBeverate_price()
+  +getFood_price()
+  .. Setters ..
+  +setBeverage_price(int price)
+  +setFood_price(int price)
+}
+
+note left of Suplier::noticeAll() 
+  this function calls update\n 
+  in subscribers
+end note
+@enduml
